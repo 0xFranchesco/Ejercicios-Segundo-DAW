@@ -1,0 +1,46 @@
+* {
+    box-sizing: border-box;
+}
+
+#Texto{
+    text-align: center;
+    padding: 25px;
+}
+
+#contenedorTablero {
+    display: flex;
+    justify-content: center;
+}
+
+#Tablero{
+    border-collapse: collapse;
+    background-color: #fcff5e;
+    display: inline-block;
+}
+
+.td{
+    width: 70px;  
+    height: 70px;
+    border: 1px solid #333
+}
+
+.td:hover{
+    background-color: #fdffa0;
+}
+
+.negra{
+    background-color: rgb(255, 65, 65);
+}
+
+.negra:hover{
+    background-color: rgb(255, 125, 125);
+}
+
+.pieza{
+    width: 70px;  
+    height: 60px;
+}
+
+.seleccionada{
+    background-color: aqua;
+}
