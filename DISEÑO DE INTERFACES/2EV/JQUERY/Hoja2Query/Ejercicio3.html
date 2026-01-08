@@ -19,22 +19,21 @@
 
        #btn1 {
 
-        margin-left: 90px;
         margin-bottom: 30px;
-        background-color: orange;
+        margin-left: 15px;
+        border: 2px solid black;
         padding: 5px;
+        color: blue;
 
        }
 
-        #btn2 {
+       #cajaFiltro {
 
-        margin-left: 90px;
+        margin-left: 40px;
         margin-bottom: 30px;
-        background-color: rgb(61, 54, 255);
-        padding: 5px;
 
        }
-
+       
 
     </style>
 
@@ -55,40 +54,46 @@
 
         </ul>
 
-        <button id="btn1"><h1>Resaltar tutoriales uniwebsidad</h1></button>
-        <button id="btn2"><h1>Resaltar tutoriales w3school</h1></button>
-
+        <div id="cajaFiltro">
+        <h3>Web de Prodecencia:</h3>
+        <select id="filtro" placeholder="Escribe w3school o uniwebsidad">
+            <option value="w3schools">w3schools</option>
+            <option value="uniwebsidad">uniwebsidad</option>
+        </select>
+        <button id="btn1">Filtrar</button>
+        </div>
     </div>
-
-
 
     <script>
     $(document).ready(function(e){
 
-        $.expr[':'].uniwebsidad = function(elem, index, meta) {
+        let filtro = $('#filtro').val();
 
-            return $(elem).attr("href")?.includes("uniwebsidad.com");
-
+         $.expr[':'].uniwebsidad = function(elem, index, meta) {
+            return $(elem).attr('href').toLowerCase().startsWith('https://uniwebsidad.com');
         };
 
         $.expr[':'].w3school = function(elem, index, meta) {
-
-            return $(elem).attr("href")?.includes("w3schools.com"); 
-        
+            return $(elem).attr('href').toLowerCase().startsWith('https://www.w3schools.com');
         };
 
-        $("#btn1").click(function(){
-       
-            $("*:uniwebsidad").css("background-color", "yellow");
+        $('#btn1').click(function(){
+
+            if(filtro == 'w3schools') {
+                
+                $("a:uniwebsidad").css("background-color", "white");
+                $("a:w3school").css("background-color", "red");
+
+            } else if (filtro == 'uniwebsidad') {
+                
+                $("a:w3school").css("background-color", "white");
+                $("a:uniwebsidad").css("background-color", "yellow");
+
+            }
 
         });
-        //España
-        $("#btn2").click(function(){
-       
-            $("*:w3school").css("background-color", "red");
 
-        });
-       
+
     });
     </script>
 
