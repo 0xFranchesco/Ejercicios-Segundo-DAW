@@ -4,16 +4,21 @@
 
 <h2>{{listado}}</h2>
 
+@if (mostrarVideojuegos) {
 <ul>
     <li>Expedition 33</li>
     <li>Gta6</li>
     <li>Mario Kart</li>
     <li>Lies of P</li>
 </ul>
+} @else {
+    <ul>
 
+    </ul>
+}
     <br>
+    <button (click)='cambiarMostrarVideojuegos()'>Mostrar/Ocultar videojuego</button><br><br>
 <button (click)='cambiarTitulo("Cambio el titulo")'>Cambiar titulo</button>
-    
     <br>
     <br>
 
