@@ -1,0 +1,281 @@
+<!doctype html>
+<html>
+<head>
+   <meta charset="UTF-8" meta charset="UTF-8">
+   <title> Examen con fotos y tablas </title>
+
+   <style>
+		.ocultar{
+			display: none;
+		}
+
+	   .fotos { /* defino una clase para cambiar el tamaño de las fotos */
+	   		width: 100px;
+	   		height: 100px;
+		}
+
+	   .amplia { /* defino una clase para cambiar el tamaño de las fotos ampliadas*/
+	   		width: 500px;
+	   		height: 500px;
+		}
+
+		.recolocar{   /* defino una clase para recolocar el div de la foto ampliada */
+			position: fixed;
+			top: 50px;
+			right: 30px;
+		}
+
+		.tabla{
+			border-collapse: collapse;
+			border: 2px solid black;
+		}
+
+		td{
+			border: 2px solid black;
+			padding: 15px;
+		}
+
+   </style>
+
+
+   <script type="text/javascript">
+	
+	
+	let listaFotos=[
+		{
+			"nombre": "FB_IMG_1685577146004",
+			"tipo": "jpg",
+			"tamanno": "95.477",
+			"tematica": ["Web","Programacion"]
+		},
+		{
+			"nombre": "FB_IMG_1676156609518",
+			"tipo": "jpg",
+			"tamanno": "22.089",
+			"tematica": "Programacion"
+		},
+				{
+			"nombre": "FB_IMG_1667318456231",
+			"tipo": "jpg",
+			"tamanno": "83.212",
+			"tematica": "Programacion"
+		},
+		{
+			"nombre": "FB_IMG_1678917723620",
+			"tipo": "jpg",
+			"tamanno": "45.624",
+			"tematica": ["Web", "programacion"]
+		},
+		{
+			"nombre": "FB_IMG_1699051552872",
+			"tipo": "jpg",
+			"tamanno": "63.303",
+			"tematica": "Programacion"
+		},
+			{
+			"nombre": "FB_IMG_1645211597935",
+			"tipo": "jpg",
+			"tamanno": "74.104",
+			"tematica": ["Web", "programacion"]
+		}
+	];
+
+	
+   </script>
+</head>
+
+<body>
+	<div id="destino"> </div> <!-- Aquí pondré la tabla -->					
+	</div>
+
+	<div id="ampliada"> </div> <!-- Aquí pondré las fotos ampliadas que saldrán en el lado derecho -->					
+	</div>
+
+	<br/>
+	<br/>
+	<input type="button" value="Enviar al servidor las seleccionadas" name="boton">
+
+	<br/>
+	<br/>
+	<p id="p"> Pulsa F1 para ordenar por nombre las fotos </p>
+
+	<dialog id="size" style="position:absolute; margin:0 ;"></dialog> <!-- Diálogo que mostrará el tamaño de la foto al pasar el ratón por encima -->
+
+    <script>
+        
+		window.addEventListener('load', () => {
+
+			//llamo a todo
+			let destino = document.getElementById("destino");
+			let ampliada = document.getElementById("ampliada");
+			ampliada.classList.add("recolocar");
+			let dialogo = document.getElementById("size");
+			let textoDialogo = document.createElement("h3");
+			let tabla = document.createElement('table');
+			let textoClick = document.getElementById("p");
+
+			//esto es para que aparezca el texto solo si no se pulsa en ninguno de los sitios especificados
+			document.addEventListener("click", (e) => {
+				
+			let elemento = e.target;
+
+			if (elemento.closest("table") ||
+			   elemento.closest("button") ||
+			    elemento.closest("input") ||
+			     elemento.closest("img") ) {
+
+					return;
+
+				}else{
+
+				textoClick.textContent = "No sirve de nada pulsar aquí";
+
+				setTimeout(() => {
+					textoClick.textContent = "Pulsa F1 para ordenar por nombre las fotos";
+				}, 3000);
+				
+				}
+
+			});
+
+			//ejecuto a la funcion pintar tabla
+			pintarTabla();
+
+			function pintarTabla() {
+				
+			//la limpio antes de empezar para que al darle a ordernar no me las vuelva a pintar debajo	
+			tabla.innerHTML = "";
+
+			//para que no intente añadirlo todo el tiempo
+			dialogo.appendChild(textoDialogo);
+
+			for (let foto of listaFotos) {
+
+				let tdImagen = document.createElement('td');
+				let tdNombre = document.createElement('td');
+				let tdTamano = document.createElement('td');
+				let tdCheck = document.createElement('td');
+
+				let tr = document.createElement('tr');
+
+//--------------------------------Imagen-----------------------------------------
+				let imagen = document.createElement('img');
+
+				imagen.src = `/assets/${foto.nombre}.${foto.tipo}`;
+				imagen.alt = `/assets/${foto.nombre}`;
+				imagen.classList.add('fotos');
+
+				imagen.addEventListener("click", () => {
+
+					imagen.classList.add("amplia");
+					ampliada.appendChild(imagen);
+
+					setTimeout(() => {
+
+						imagen.classList.remove("amplia");
+						tdImagen.appendChild(imagen);
+
+					}, 3000);
+
+				});
+
+				tdImagen.appendChild(imagen);
+//---------------------------------------------------------------------------------
+				
+//--------------------------------Checkbox-----------------------------------------
+				let check = document.createElement("input");
+
+				check.type = "checkbox";
+				check.classList.add("checkbox");
+
+				check.dataset.nombre = `${foto.nombre}`;
+				tdCheck.appendChild(check);
+//---------------------------------------------------------------------------------
+
+//--------------------------------Dialogo------------------------------------------
+
+				tdNombre.addEventListener("mouseenter", () => {
+					textoDialogo.textContent = `${foto.tamanno}`;
+					dialogo.show();
+				});
+				tdNombre.addEventListener("mouseleave", () => {
+					dialogo.close();
+				});
+//--------------------------------------------------------------------------------
+				//Asigno en cada td lo que va y los añado
+				tdNombre.textContent = `${foto.nombre}`;
+				tdTamano.textContent = `${foto.tamanno}`;
+
+				tr.appendChild(tdImagen);
+				tr.appendChild(tdNombre);
+				tr.appendChild(tdTamano);
+				tr.appendChild(tdCheck);
+
+				tabla.appendChild(tr);
+
+			}
+
+			destino.appendChild(tabla);
+
+		}
+
+		document.addEventListener("keydown", (e) => {
+
+			if (e.key === "F1") {
+				e.preventDefault();
+				listaFotos.sort((a,b) => { 
+				  return a.nombre.localeCompare(b.nombre);
+				});
+				pintarTabla();
+				
+			}
+
+		});
+
+		let botonEnviar = document.querySelector("[name ='boton']");
+
+		botonEnviar.addEventListener("click", async (e) => {
+
+			e.preventDefault();
+
+			let marcados = document.querySelectorAll(".checkbox:checked");
+			
+			for (let marcado of marcados) {
+				await enviarNombre({ nombre: marcado.dataset.nombre });
+			}
+
+		});
+
+		async function enviarNombre(foto) {
+
+			try {
+
+				let respuesta = await fetch("http://localhost:3000/datosFotos",{
+				
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(foto)
+
+				});
+
+			} catch (error) {
+				
+				console.log("Algo has liao ya");
+
+			}
+			
+		}
+
+
+
+		});
+
+
+
+    </script>
+</body>
+</html>
+
+

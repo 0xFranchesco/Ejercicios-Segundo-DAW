@@ -1,0 +1,193 @@
+<!doctype html>
+<html>
+<head>
+   <meta charset="UTF-8" meta charset="UTF-8">
+   <title> Examen con fotos y tablas </title>
+
+   <style>
+		.ocultar{
+			display: none;
+		}
+
+	   .fotos { /* defino una clase para cambiar el tamaño de las fotos */
+	   		width: 100px;
+	   		height: 100px;
+		}
+
+	   .amplia { /* defino una clase para cambiar el tamaño de las fotos ampliadas*/
+	   		width: 500px;
+	   		height: 500px;
+		}
+
+		.recolocar{   /* defino una clase para recolocar el div de la foto ampliada */
+			position: fixed;
+			top: 50px;
+			right: 30px;
+		}
+
+		.tabla,td{
+			border-collapse: collapse;
+			border: 2px solid black;
+		}
+		.elementos{
+			padding: 15px;
+		}
+
+   </style>
+
+
+   <script type="text/javascript">
+	
+	
+	let listaFotos=[
+		{
+			"nombre": "FB_IMG_1685577146004",
+			"tipo": "jpg",
+			"tamanno": "95.477",
+			"tematica": ["Web","Programacion"]
+		},
+		{
+			"nombre": "FB_IMG_1676156609518",
+			"tipo": "jpg",
+			"tamanno": "22.089",
+			"tematica": "Programacion"
+		},
+				{
+			"nombre": "FB_IMG_1667318456231",
+			"tipo": "jpg",
+			"tamanno": "83.212",
+			"tematica": "Programacion"
+		},
+		{
+			"nombre": "FB_IMG_1678917723620",
+			"tipo": "jpg",
+			"tamanno": "45.624",
+			"tematica": ["Web", "programacion"]
+		},
+		{
+			"nombre": "FB_IMG_1699051552872",
+			"tipo": "jpg",
+			"tamanno": "63.303",
+			"tematica": "Programacion"
+		},
+			{
+			"nombre": "FB_IMG_1645211597935",
+			"tipo": "jpg",
+			"tamanno": "74.104",
+			"tematica": ["Web", "programacion"]
+		}
+	];
+
+   </script>
+</head>
+
+<body>
+	<div id="destino"> </div> <!-- Aquí pondré la tabla -->					
+	</div>
+
+	<div id="ampliada"> </div> <!-- Aquí pondré las fotos ampliadas que saldrán en el lado derecho -->					
+	</div>
+
+	<br/>
+	<br/>
+	<input type="button" value="Enviar al servidor las seleccionadas" name="boton">
+
+	<br/>
+	<br/>
+	<p id="p"> Pulsa F1 para ordenar por nombre las fotos </p>
+
+	<dialog id="size" style="position:absolute; margin:0;"></dialog> <!-- Diálogo que mostrará el tamaño de la foto al pasar el ratón por encima -->
+
+    <script>
+        
+		window.addEventListener('load', () => {
+
+			let tablero = document.getElementById('destino'); 
+
+			let ampliada = document.getElementById('ampliada');
+
+			let dialogo = document.getElementById('size');
+
+			let p = document.getElementById('p');
+
+			let tabla = document.createElement('table');
+
+			tabla.classList.add('tabla');
+
+			for (let fotico of listaFotos) {
+				
+				let tr = document.createElement('tr');
+
+				let tdImagen = document.createElement('td');
+				let tdNombre = document.createElement('td');
+				let tdTamano = document.createElement('td');
+				let tdCheck = document.createElement('td');
+
+				let imagen = document.createElement('img');
+
+				imagen.alt = fotico.nombre;
+				imagen.src = `/assets/${fotico.nombre}.${fotico.tipo}`;
+				imagen.classList.add("fotos");
+				tdImagen.appendChild(imagen);
+
+				imagen.addEventListener("click", (e) =>{
+					e.preventDefault;
+					imagen.classList.add("amplia");
+					ampliada.appendChild(imagen);
+					setTimeout(() => {
+						imagen.classList.remove("amplia");
+						tdImagen.appendChild(imagen);
+					}, 3000);
+				});
+
+				tdNombre.innerHTML = `${fotico.nombre}`;
+				tdNombre.classList.add("elementos");
+				tdNombre.addEventListener("mouseenter", (e) => {
+					e.preventDefault;
+					dialogo.classList.add("recolocar");
+					dialogo.innerHTML = `<p>${fotico.tamanno}</p>`;
+					dialogo.showModal();					
+				});
+				tdNombre.addEventListener("mouseleave", (e) => {
+					e.preventDefault;
+					dialogo.close();					
+				});
+
+				tdTamano.innerHTML = `${fotico.tamanno}`;
+				tdTamano.classList.add("elementos");
+
+				tdCheck.innerHTML = `<input type="checkbox" id="check">`;
+				tdCheck.classList.add("elementos");
+
+				tr.appendChild(tdImagen);
+				tr.appendChild(tdNombre);
+				tr.appendChild(tdTamano);
+				tr.appendChild(tdCheck);
+
+				tabla.appendChild(tr);
+
+				
+				document.addEventListener("click", (e) => {
+				if (e.target.closest("table, button")) return;
+				p.innerHTML = `No sirve de nada pulsar aqui`;
+				setTimeout(() => {
+					p.innerHTML = "Pulsa F1 para ordenar por nombre las fotos";
+				}, 3000);
+				});
+
+			}
+
+			tablero.appendChild(tabla);
+
+
+			
+
+
+		});
+
+
+    </script>
+</body>
+</html>
+
+
