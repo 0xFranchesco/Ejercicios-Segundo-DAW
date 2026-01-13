@@ -1,0 +1,16 @@
+meta {
+  name: Show
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{BASE_URL}}/genres/2
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

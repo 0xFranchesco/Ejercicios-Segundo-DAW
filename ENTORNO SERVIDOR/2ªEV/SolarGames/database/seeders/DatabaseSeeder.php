@@ -8,6 +8,8 @@ use Illuminate\Database\Seeder;
 use App\Models\Genre;
 use App\Models\Game;
 use App\Models\Review;
+use Faker\Factory as Faker; 
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,6 +20,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+
+        $faker = Faker::create('es_ES');
+
         Genre::factory(5)->create();
         Game::factory(20)->create();
         User::factory(5)->create();
