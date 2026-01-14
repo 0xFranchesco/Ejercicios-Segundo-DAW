@@ -3,10 +3,20 @@
 
 <ul>
 
-    <li>Niqué</li>
-    <li>Ardidas</li>
-    <li>Fuma</li>
-    <li>Guchi</li>
+    <li *ngFor="let zapatilla of zapatillas">
+
+     
+        {{ zapatilla.Marca }} - 
+        {{ zapatilla.Color }} - 
+        {{ zapatilla.Modelo }} -
+        {{ zapatilla.Precio }} € 
+    <span *ngIf="zapatilla.Precio <= 80"
+        style="color: rgb(26, 255, 0); font-weight: bold;">
+         EN OFERTA! 
+    </span> -
+        {{ zapatilla.Stock }}
+      
+    </li>
 
 </ul>
 

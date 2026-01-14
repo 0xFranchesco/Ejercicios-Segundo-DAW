@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fran Castaño</title>
+    <script
+    src='https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js'>
+    </script>
+
+    <style>
+
+       #marco {
+
+
+        border: 3px solid black;
+
+       }
+
+       #btn1 {
+
+        margin-bottom: 30px;
+        margin-left: 15px;
+        border: 2px solid black;
+        padding: 5px;
+        color: blue;
+
+       }
+
+       #cajaFiltro {
+
+        margin-left: 40px;
+        margin-bottom: 30px;
+
+       }
+       
+
+    </style>
+
+</head>
+<body>
+
+    <div id="marco">
+
+        <h1>Tutoriales sobre Diseño Web</h1>
+
+        <ul>
+
+            <li><a href="https://www.w3schools.com/html/">HTML</a></li>
+            <li><a href="https://uniwebsidad.com/libros/css">Introduccion a CSS</a></li>
+            <li><a href="https://www.w3schools.com/bootstrap4/default.asp">Bootstrap 4</a></li>
+            <li><a href="https://uniwebsidad.com/libros/fundamentos-jquery">Fundamentos de JQuery</a></li>
+            <li><a href="https://www.w3schools.com/jquery/default.asp">Tutorial de jQuery</a></li>
+
+        </ul>
+
+        <div id="cajaFiltro">
+        <h3>Web de Prodecencia:</h3>
+        <select id="filtro" placeholder="Escribe w3school o uniwebsidad">
+            <option value="w3schools">w3schools</option>
+            <option value="uniwebsidad">uniwebsidad</option>
+        </select>
+        <button id="btn1">Filtrar</button>
+        </div>
+    </div>
+
+    <script>
+    $(document).ready(function(e){
+
+        let filtro = $('#filtro').val();
+
+         $.expr[':'].uniwebsidad = function(elem, index, meta) {
+            return $(elem).attr('href').toLowerCase().startsWith('https://uniwebsidad.com');
+        };
+
+        $.expr[':'].w3school = function(elem, index, meta) {
+            return $(elem).attr('href').toLowerCase().startsWith('https://www.w3schools.com');
+        };
+
+        $(function() {
+            $('#filtro').change(function() {
+                filtro = $('#filtro').val();
+            });
+        });
+
+        $.fn.resaltar = function() {
+            return $(this).css("font-weight", "bold");
+        };
+
+        $('#btn1').click(function(){
+
+            if(filtro == 'w3schools') {
+                
+                $("a:uniwebsidad").css("background-color", "white").css("font-weight", "normal");
+                $("a:w3school").css("background-color", "red").resaltar();
+
+            } else if (filtro == 'uniwebsidad') {
+                
+                $("a:w3school").css("background-color", "white").css("font-weight", "normal");
+                $("a:uniwebsidad").css("background-color", "yellow").resaltar();
+
+            }
+
+        });
+
+
+    });
+    </script>
+
+</body>
+</html>

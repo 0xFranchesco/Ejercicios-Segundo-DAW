@@ -94,7 +94,7 @@ window.addEventListener("load", () =>  {
             // pintamos la mesa
             ponerMesa.appendChild(mesa);
 
-            // eitar menú contextual sobre la mesa
+            // eitar menu contextual sobre la mesa
             mesa.addEventListener("contextmenu", (e) => { 
                 
                 e.preventDefault();
@@ -106,7 +106,7 @@ window.addEventListener("load", () =>  {
 //--------------------------Numero y pedidos de la mesa----------------------------------
 
             //Ahora te voy a pedir el numero de mesa y la comanda, 
-            // las cuales almacenaremos en una variable
+            //las cuales almacenaremos en una variable
 
             let numeroMesa;
             let comanda;
@@ -181,9 +181,9 @@ window.addEventListener("load", () =>  {
 
             for (let elemento of listaComandas) {
                     
-            let comandos = document.createElement("dialog");
+            let comandas = document.createElement("dialog");
 
-            comandos.innerHTML = `
+            comandas.innerHTML = `
     
             <h2>Aqui estan todos los comandos de todas las mesas</h2>
 
@@ -200,16 +200,16 @@ window.addEventListener("load", () =>  {
 
             `;
 
-            let btnCerrar = comandos.querySelector("#btnCerrar");
-            botonVerComandas.appendChild(comandos);
+            let btnCerrar = comandas.querySelector("#btnCerrar");
+            botonVerComandas.appendChild(comandas);
 
-            comandos.showModal();
+            comandas.showModal();
 
             btnCerrar.addEventListener("click", (e) => {
 
                 e.preventDefault();
 
-                comandos.close();
+                comandas.close();
                 
             });
 
@@ -231,7 +231,7 @@ window.addEventListener("load", () =>  {
             let offsetY = 0;
 
             function onMouseMove(e) {
-                if (!dragging) return;
+                if (dragging === false) return;
                 e.preventDefault();
                 mesa.style.left = (e.clientX - offsetX) + "px";
                 mesa.style.top = (e.clientY - offsetY) + "px";
