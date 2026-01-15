@@ -1,0 +1,22 @@
+meta {
+  name: Register
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{BASE_URL}}/register
+  body: multipartForm
+  auth: inherit
+}
+
+body:multipart-form {
+  name: Manolo
+  email: manolito@manolo.com
+  password: 12345678
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

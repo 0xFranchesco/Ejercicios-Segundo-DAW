@@ -1,0 +1,20 @@
+meta {
+  name: Update
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{BASE_URL}}/games/3
+  body: multipartForm
+  auth: inherit
+}
+
+body:multipart-form {
+  title: HolaMundo
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

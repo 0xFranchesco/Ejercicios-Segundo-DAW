@@ -12,6 +12,11 @@ class Game extends Model
 
     protected $fillable = [
         'title',
+        'synopsis',
+        'developer',
+        'publisher',
+        'release_year',
+        'genre_id',
     ];
 
     public function genre()

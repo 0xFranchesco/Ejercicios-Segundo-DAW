@@ -10,6 +10,13 @@ class Review extends Model
     /** @use HasFactory<\Database\Factories\ReviewFactory> */
     use HasFactory;
 
+    protected $fillable = [
+        'comment',
+        'score',
+        'game_id',
+        'user_id',
+    ];
+
     public function game()
     {
         return $this->belongsTo(Game::class);

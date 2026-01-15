@@ -1,15 +1,25 @@
 meta {
   name: Create
   type: http
-  seq: 3
+  seq: 4
 }
 
 post {
-  url: 
-  body: none
+  url: {{BASE_URL}}/games
+  body: multipartForm
   auth: inherit
+}
+
+body:multipart-form {
+  title: CrashBandicoot
+  synopsis: LaPutaPolla
+  developer: Ni idea
+  publisher: Menos idea aun
+  release_year: 2006
+  genre_id: 2
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\GenreRequest;
 use Illuminate\Http\Request;
 use App\Models\Genre;
 
@@ -19,15 +20,15 @@ class GenreController extends Controller
         return $genre;
     }
 
-    public function store(Request $request)
+    public function store(GenreRequest $request)
     {
-        $genre = Genre::create($request->all());
+        $genre = Genre::create($request->validated());
         return $genre;
     }
 
-    public function update(Genre $genre)
+    public function update(Genre $genre, GenreRequest $request)
     {
-        $genre->update(request()->all());
+        $genre->update($request->validated());
         return $genre;
     }
 
