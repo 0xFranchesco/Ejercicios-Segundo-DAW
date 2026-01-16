@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ReviewResource;
 use App\Models\Review;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
@@ -42,6 +44,11 @@ class ReviewController extends Controller
             'mensaje' => 'Error al eliminarlo'
             ], 404);
         }
+    }
+
+    public function UserReviews(User $user)
+    {
+        return ReviewResource::collection($user->reviews);
     }
 
 }

@@ -16,45 +16,21 @@ Route::get('/', function (Request $request) {
     return "Wellcome(Bien venido)";
 });
 
-//-------------------------GENRES---------------------------
 
-Route::get('/genres', [GenreController::class, 'index']);
-Route::get('/genres/{genre}', [GenreController::class, 'show']);
-//SIGUE POR AQUI ARREGLANDOLO EN EL BRUNO
-Route::patch('/genres/{genre}', [GenreController::class, 'update'])
-->middleware('auth:sanctum');
-Route::post('/genres', [GenreController::class, 'store'])
-->middleware('auth:sanctum');
-Route::delete('/genres/{genre}', [GenreController::class, 'destroy'])
-->middleware('auth:sanctum');
+//-------------------------GAMES-GENRES-REVIEWS----------------------------
 
-//----------------------------------------------------------
+Route::get('/users/{user}/reviews', [ReviewController::class, 'UserReviews']);    
 
-//-------------------------GAMES----------------------------
+Route::apiResource('games', GameController::class)->only(['index', 'show']);
+Route::apiResource('genres', GenreController::class)->only(['index', 'show']);
+Route::apiResource('reviews', ReviewController::class)->only(['index', 'show']);
 
-Route::get('/games', [GameController::class, 'index']);
-Route::get('/games/{game}', [GameController::class, 'show']);
-Route::patch('/games/{game}', [GameController::class, 'update'])
-->middleware('auth:sanctum');
-Route::post('/games', [GameController::class, 'store'])
-->middleware('auth:sanctum');
-Route::delete('/games/{game}', [GameController::class, 'destroy'])
-->middleware('auth:sanctum');
 
-//-----------------------------------------------------------
-
-//-------------------------REVIEWS---------------------------
-
-Route::get('/reviews', [ReviewController::class, 'index']);
-Route::get('/reviews/{review}', [ReviewController::class, 'show']);
-Route::patch('/reviews/{review}', [ReviewController::class, 'update'])
-->middleware('auth:sanctum');
-Route::post('/reviews', [ReviewController::class, 'store'])
-->middleware('auth:sanctum');
-Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])
-->middleware('auth:sanctum');
-
-//-----------------------------------------------------------
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('games', GameController::class)->except(['index', 'show']);
+    Route::apiResource('genres', GenreController::class)->except(['index', 'show']);
+    Route::apiResource('reviews', ReviewController::class)->except(['index', 'show']);
+});
 
 //-------------------------USUARIOS--------------------------
 

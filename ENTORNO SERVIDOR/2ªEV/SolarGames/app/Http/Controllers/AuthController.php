@@ -38,7 +38,7 @@ class AuthController extends Controller
         }
 
         $user = Auth::user();
-        $token = $user->createToken('Token para' . $user->email);
+        $token = $user->createToken('Token para' . $user->email, ['*'], expiresAt: now()->addMonth(1));
         
         return response()->json([
             'message' => 'Inicio de sesión exitoso',
