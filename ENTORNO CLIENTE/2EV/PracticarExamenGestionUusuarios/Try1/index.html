@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recuperación JS - Gestión de usuarios</title>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      #layout {
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
+      }
+      #zonaTabla {
+        width: 70%;
+      }
+      #zonaFicha {
+        width: 30%;
+        min-height: 200px;
+        border: 1px solid #ccc;
+        padding: 10px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid #333;
+        padding: 8px;
+        text-align: left;
+      }
+      img.avatar {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        cursor: pointer;
+      }
+      #mensaje {
+        margin: 10px 0;
+        padding: 10px;
+        border: 1px dashed #666;
+      }
+      .oculto {
+        display: none;
+      }
+      .checkbox {
+        margin-left: 35%;
+      }
+      dialog {
+        position: absolute;
+        margin: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2>Gestión de usuarios</h2>
+
+    <div id="mensaje">Pulsa F1 para ordenar…</div>
+
+    <div id="layout">
+      <div id="zonaTabla">
+        <table id="tablaUsuarios">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Nombre completo</th>
+              <th>Email</th>
+              <th>Rol</th>
+              <th>Fecha alta</th>
+              <th>Antigüedad (años)</th>
+              <th>Edad</th>
+              <th>Marcar</th>
+            </tr>
+          </thead>
+          <tbody id="tbodyUsuarios">
+            <!-- Filas generadas por JS -->
+          </tbody>
+        </table>
+
+        <div id="tooltip"></div>
+
+        <br />
+        <button id="btnEnviar">Enviar al servidor los seleccionados</button>
+      </div>
+
+      <div id="zonaFicha">
+        <strong>Ficha usuario (click en nombre)</strong>
+        <div id="fichaContenido"></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      window.addEventListener("load", () => {
+        let tablaUsuarios = document.getElementById("tbodyUsuarios");
+        let mensaje = document.getElementById("mensaje");
+        let fichaContenido = document.getElementById("fichaContenido");
+        let tooltip = document.getElementById("tooltip");
+        let dialog = document.createElement("dialog");
+        tooltip.appendChild(dialog);
+        let btnEnviar = document.getElementById("btnEnviar");
+
+        let usuarios = [];
+
+        document.addEventListener("click", (e) => {
+          let elemento = e.target;
+
+          if (
+            elemento.closest("button") ||
+            elemento.closest("td") ||
+            elemento.closest("th") ||
+            elemento.closest("input")
+          ) {
+            return;
+          } else {
+            mensaje.textContent = "No sirve de nada pulsar aquí";
+
+            setTimeout(() => {
+              mensaje.textContent = "Pulsa F1 para ordenar…";
+            }, 3000);
+          }
+        });
+
+        traerUsuarios();
+
+        async function traerUsuarios() {
+          let respuesta = await fetch("http://localhost:3000/usuarios");
+
+          if (!respuesta.ok) {
+            throw new Error("Error en la peticion de traer usuarios.");
+          }
+
+          usuarios = await respuesta.json();
+          pintarUsuarios();
+        }
+
+        function pintarUsuarios() {
+          for (let usuario of usuarios) {
+            let tdId = document.createElement("td");
+            let tdNombre = document.createElement("td");
+            let tdEmail = document.createElement("td");
+            let tdRol = document.createElement("td");
+            let tdFechaAlta = document.createElement("td");
+            let tdAntiguedad = document.createElement("td");
+            let tdEdad = document.createElement("td");
+            let tdCheck = document.createElement("td");
+
+            let tr = document.createElement("tr");
+
+            tdId.textContent = `${usuario.id}`;
+            tr.appendChild(tdId);
+
+            tdNombre.textContent = `${usuario.nombre} ${usuario.apellidos}`;
+            tr.appendChild(tdNombre);
+
+            tdNombre.addEventListener("click", (e) => {
+              fichaContenido.appendChild(tr);
+
+              setTimeout(() => {
+                tablaUsuarios.appendChild(tr);
+              }, 3000);
+            });
+
+            tdEmail.textContent = `${usuario.email}`;
+            tr.appendChild(tdEmail);
+
+            tdRol.textContent = `${usuario.rol}`;
+            tr.appendChild(tdRol);
+
+            tdFechaAlta.textContent = `${usuario.fechaAlta}`;
+            tr.appendChild(tdFechaAlta);
+
+            let fechaActual = new Date();
+            let fechaDeAlta = new Date(usuario.fechaAlta);
+            let fechaDeNacimiento = new Date(usuario.fechaNacimiento);
+            let cumpleaños = usuario.fechaNacimiento;
+            cumpleaños = cumpleaños.slice(5, 10);
+
+            let diferenciaMsAntiguedad = fechaActual - fechaDeAlta;
+            let diferenciaMsEdad = fechaActual - fechaDeNacimiento;
+
+            let diasAntiguedad = diferenciaMsAntiguedad / (1000 * 60 * 60 * 24);
+            let diasEdad = diferenciaMsEdad / (1000 * 60 * 60 * 24);
+            let añosAntiguedad = Math.round(diasAntiguedad) / 365;
+            let añosEdad = Math.round(diasEdad) / 365;
+
+            añosAntiguedad = añosAntiguedad.toFixed(1);
+            añosEdad = añosEdad.toFixed(0);
+
+            tdAntiguedad.textContent = añosAntiguedad;
+            tr.appendChild(tdAntiguedad);
+
+            tdEdad.textContent = añosEdad;
+            tr.appendChild(tdEdad);
+
+            let check = document.createElement("input");
+            check.type = "checkbox";
+            check.classList.add("checkbox");
+            check.dataset.id = usuario.id;
+            check.dataset.nombre = `${usuario.nombre} ${usuario.apellidos}`;
+            tdCheck.appendChild(check);
+            tr.appendChild(tdCheck);
+
+            tdNombre.addEventListener("mouseenter", (e) => {
+              dialog.style.left = e.pageX + 15 + "px";
+              dialog.style.top = e.pageY + 15 + "px";
+              dialog.textContent = `El cumpleaños de ${usuario.nombre}, es el ${cumpleaños}`;
+              dialog.show();
+            });
+            tdNombre.addEventListener("mouseleave", (e) => {
+              dialog.close();
+            });
+
+            tablaUsuarios.appendChild(tr);
+          }
+        }
+
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "F1") {
+            e.preventDefault();
+            usuarios.sort((a, b) => {
+              return a.nombre.localeCompare(b.nombre);
+            });
+            tablaUsuarios.textContent = "";
+            pintarUsuarios();
+          }
+        });
+
+        btnEnviar.addEventListener("click", async (e) => {
+
+          e.preventDefault();
+          let marcados = document.querySelectorAll(".checkbox:checked");
+
+          for (let marcado of marcados) {
+            await enviarUsuarios({id: marcado.dataset.id, nombre: marcado.dataset.nombre});
+          }
+
+        });
+
+        async function enviarUsuarios(usuario) {
+          try {
+            let respuesta = await fetch("http://localhost:3000/seleccionados", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(usuario),
+            });
+          } catch (error) {
+            console.log("Algo has liao monstruo");
+          }
+        }
+
+      });
+    </script>
+  </body>
+</html>

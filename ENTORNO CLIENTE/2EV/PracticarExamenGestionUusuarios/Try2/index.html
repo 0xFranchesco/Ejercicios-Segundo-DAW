@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recuperación JS - Gestión de usuarios</title>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      #layout {
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
+      }
+      #zonaTabla {
+        width: 70%;
+      }
+      #zonaFicha {
+        width: 30%;
+        min-height: 200px;
+        border: 1px solid #ccc;
+        padding: 10px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid #333;
+        padding: 8px;
+        text-align: left;
+      }
+      #mensaje {
+        margin: 10px 0;
+        padding: 10px;
+        border: 1px dashed #666;
+      }
+      .checkbox {
+        margin-left: 45%;
+      }
+      dialog {
+        position: absolute;
+        margin: 0;
+      }
+      #formUsuario {
+        margin: 10px;
+        display: none;
+      }
+      #cancelar {
+        background-color: red;
+        color: white;
+      }
+      #enviarUsuario {
+        background-color: rgb(24, 255, 44);
+        color: white;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2>Gestión de usuarios</h2>
+
+    <div id="mensaje">Pulsa F1 para ordenar…</div>
+
+    <div id="layout">
+      <div id="zonaTabla">
+        <table id="tablaUsuarios">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Nombre completo</th>
+              <th>Email</th>
+              <th>Rol</th>
+              <th>Fecha alta</th>
+              <th>Antigüedad (años)</th>
+              <th>Edad</th>
+              <th>Marcar</th>
+            </tr>
+          </thead>
+          <tbody id="tbodyUsuarios">
+            <!-- Filas generadas por JS -->
+          </tbody>
+        </table>
+
+        <div id="tooltip"></div>
+
+        <br />
+        <button id="obtenerUsuarios" type="button">Traer usuarios</button>
+        <button id="btnEnviar">Enviar al servidor los seleccionados</button>
+        <button id="crearUsuario">Crear un usuario</button>
+        <form id="formUsuario">
+          <fieldset>
+            <legend>Formulario clientes guapos</legend>
+
+            <br />
+            <label for="nombre">Nombre:</label>
+            <input
+              type="text"
+              id="nombre"
+              name="nombre"
+              minlength="2"
+              maxlength="10"
+              required
+            /><br /><br />
+
+            <label for="apellidos">Apellidos:</label>
+            <input
+              type="text"
+              id="apellidos"
+              name="apellidos"
+              maxlength="25"
+              required
+            /><br /><br />
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required /><br /><br />
+
+            <label for="rol">Rol:</label>
+            <input type="text" id="rol" name="rol" required /><br /><br />
+
+            <label for="fechaAlta">Fecha de alta:</label>
+            <input type="date" id="fechaAlta" name="fechaAlta" required /><br /><br />
+
+            <label for="fechaNacimiento">Fecha de nacimiento:</label>
+            <input type="date" id="fechaNacimiento" name="fechaNacimiento" required /><br /><br />
+
+            <label for="activo">Activo:</label>
+            <input type="checkbox" id="activo" name="activo" checked disabled required /><br /><br />
+
+            <button id="enviarUsuario" type="submit">Enviar</button>
+            <button id="cancelar" type="button">Cancelar</button>
+          </fieldset>
+        </form>
+      </div>
+
+      <div id="zonaFicha">
+        <strong>Ficha usuario (click sobre el Nombre)</strong>
+        <div id="fichaContenido"></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      window.addEventListener("load", () => {
+        let tablaUsuarios = document.getElementById("tablaUsuarios");
+        let mensaje = document.getElementById("mensaje");
+        let tooltip = document.getElementById("tooltip");
+        let dialog = document.createElement("dialog");
+        let btnEnviar = document.getElementById("btnEnviar")
+        let fichaContenido = document.getElementById("fichaContenido");
+        let formUsuario = document.getElementById("formUsuario");
+        let crearUsuario = document.getElementById("crearUsuario");
+        let obtenerUsuarios = document.getElementById("obtenerUsuarios");
+        let enviarUsuario = document.getElementById("enviarUsuario");
+        let cancelar = document.getElementById("cancelar");
+
+        let usuarios = [];
+
+        document.addEventListener("click", (e) => {
+          let elemento = e.target;
+
+          if (
+            elemento.closest("input") ||
+            elemento.closest("td") ||
+            elemento.closest("tr") ||
+            elemento.closest("button")
+          ) {
+            return;
+          } else {
+            mensaje.textContent = "No sirve de nada pulsar aquí";
+            setTimeout(() => {
+              mensaje.textContent = "Pulsa F1 para ordenar…";
+            }, 3000);
+          }
+        });
+
+        traerUsuarios();
+
+        async function traerUsuarios() {
+          let respuesta = await fetch("http://localhost:3000/usuarios");
+          if (!respuesta.ok) {
+            throw new Error("Error en la peticion.");
+          }
+          usuarios = await respuesta.json();
+          pintarUsuarios();
+        }
+
+        function pintarUsuarios() {
+          for (let usuario of usuarios) {
+            let tdId = document.createElement("td");
+            let tdNombre = document.createElement("td");
+            let tdEmail = document.createElement("td");
+            let tdRol = document.createElement("td");
+            let tdFechaAlta = document.createElement("td");
+            let tdAntiguedad = document.createElement("td");
+            let tdEdad = document.createElement("td");
+            let tdMarcar = document.createElement("td");
+
+            let tr = document.createElement("tr");
+
+            tdId.textContent = `${usuario.id}`;
+            tr.appendChild(tdId);
+
+            tdNombre.textContent = `${usuario.nombre} ${usuario.apellidos}`;
+            tr.appendChild(tdNombre);
+
+            tdNombre.addEventListener("mouseenter", (e) => {
+              dialog.style.left = e.pageX + 15 + "px";
+              dialog.style.top = e.pageY + 15 + "px";
+              dialog.textContent = `El cumpleaños de ${usuario.nombre} es el ${cumpleaños}`;
+              dialog.show();
+              tooltip.appendChild(dialog);
+            });
+            tdNombre.addEventListener("mouseleave", (e) => {
+              dialog.close();
+            });
+
+            tdNombre.addEventListener("click", (e) => {
+
+              fichaContenido.appendChild(tr);
+              setTimeout(() => {
+                tablaUsuarios.appendChild(tr);
+              },3000);
+
+            });
+
+            tdEmail.textContent = `${usuario.email}`;
+            tr.appendChild(tdEmail);
+
+            tdRol.textContent = `${usuario.rol}`;
+            tr.appendChild(tdRol);
+
+            tdFechaAlta.textContent = `${usuario.fechaAlta}`;
+            tr.appendChild(tdFechaAlta);
+
+            let FechaActual = new Date();
+            let FechaDeAlta = new Date(usuario.fechaAlta);
+            let FechaDeNacimiento = new Date(usuario.fechaNacimiento);
+            let edad = FechaActual - FechaDeNacimiento;
+            let cumpleaños = usuario.fechaNacimiento;
+            cumpleaños = cumpleaños.slice(5);
+            let antiguedad = FechaActual - FechaDeAlta;
+
+            let antiguedadAños = antiguedad / (1000 * 60 * 60 * 24 * 365);
+            antiguedadAños = antiguedadAños.toFixed(1);
+
+            edad = edad / (1000 * 60 * 60 * 24 * 365);
+            edad = edad.toFixed(0);
+
+            tdAntiguedad.textContent = `${antiguedadAños}`;
+            tr.appendChild(tdAntiguedad);
+
+            tdEdad.textContent = `${edad}`;
+            tr.appendChild(tdEdad);
+
+            let check = document.createElement("input");
+            check.type = "checkbox";
+            check.classList.add("checkbox");
+            check.dataset.id = usuario.id;
+            check.dataset.nombre = `${usuario.nombre} ${usuario.apellidos}`;
+            tdMarcar.appendChild(check);
+            tr.appendChild(tdMarcar);
+
+            tablaUsuarios.appendChild(tr);
+          }
+        }
+
+        crearUsuario.addEventListener("click", (e) => {
+          formUsuario.style.display = "block";
+
+          cancelar.addEventListener("click", (e) => {
+            formUsuario.style.display = "none";
+          });
+          obtenerUsuarios.addEventListener("click", (e) => {
+            tablaUsuarios.textContent = "";
+            traerUsuarios();
+          });
+        });
+
+         formUsuario.addEventListener("submit", (e) => {
+              e.preventDefault();
+              crearNuevoUsuario();
+          });
+
+        function crearNuevoUsuario() {
+
+          let nombre = document.getElementById("nombre").value.trim();
+          let apellidos = document.getElementById("apellidos").value.trim();
+          let email = document.getElementById("email").value.trim();
+          let rol = document.getElementById("rol").value.trim();
+          let fechaAltaFromulario = document.getElementById("fechaAlta").value.trim();
+          let fechaNacimientoFormulario = document.getElementById("fechaNacimiento").value.trim();
+          let activo = document.getElementById("activo").checked;
+         
+          let usuario = {
+            nombre : nombre,
+            apellidos : apellidos,
+            email : email,
+            rol : rol,
+            fechaAlta : fechaAltaFromulario,
+            fechaNacimiento : fechaNacimientoFormulario,
+            activo : activo,
+          };
+
+          enviarNuevoUsuario(usuario);
+
+        }
+
+        async function enviarNuevoUsuario(usuario) {
+
+          try {
+            let respuesta = await fetch("http://localhost:3000/usuarios", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(usuario),
+            });
+
+            if (!respuesta.ok) {
+              throw new Error("Errorrrrr");
+            }
+
+            let usuCreado = await respuesta.json();
+            console.log(usuCreado);
+            alert("Usuario enviado correctamente.");
+          } catch (error) {
+            console.log("Erorr loco");
+          }
+
+        }
+
+        btnEnviar.addEventListener("click", async (e) => {
+
+          let marcados = document.querySelectorAll(".checkbox:checked");
+
+          for (let marcado of marcados) {
+            await enviarUsuarioSeleccionado({id : marcado.dataset.id, nombre : marcado.dataset.nombre});
+          }
+
+        });
+
+        async function enviarUsuarioSeleccionado(usuario) {
+           try {
+            let respuesta = await fetch("http://localhost:3000/seleccionados", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(usuario),
+            });
+          } catch (error) {
+            console.log("Algo has liao monstruo");
+          }
+        }
+
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "F1") {
+            e.preventDefault();
+            usuarios.sort((a, b) => {
+              return a.nombre.localeCompare(b.nombre);
+            });
+            tablaUsuarios.textContent = "";
+            pintarUsuarios();
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

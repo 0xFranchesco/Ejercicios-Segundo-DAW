@@ -1,0 +1,105 @@
+{
+  "usuarios": [
+    {
+      "id": 1,
+      "nombre": "Laura",
+      "apellidos": "García Pérez",
+      "email": "laura.garcia@mail.com",
+      "rol": "admin",
+      "fechaAlta": "2022-09-15",
+      "fechaNacimiento": "2001-03-22",
+      "activo": true
+    },
+    {
+      "id": 2,
+      "nombre": "Carlos",
+      "apellidos": "Martínez López",
+      "email": "carlos.martinez@mail.com",
+      "rol": "user",
+      "fechaAlta": "2023-02-10",
+      "fechaNacimiento": "2000-11-05",
+      "activo": true
+    },
+    {
+      "id": 3,
+      "nombre": "Marta",
+      "apellidos": "Sánchez Ruiz",
+      "email": "marta.sanchez@mail.com",
+      "rol": "guest",
+      "fechaAlta": "2024-01-20",
+      "fechaNacimiento": "2004-07-18",
+      "activo": false
+    },
+    {
+      "id": 4,
+      "nombre": "David",
+      "apellidos": "Hernández Gil",
+      "email": "david.hernandez@mail.com",
+      "rol": "user",
+      "fechaAlta": "2021-05-30",
+      "fechaNacimiento": "1999-12-02",
+      "activo": true
+    },
+    {
+      "id": 5,
+      "nombre": "Ana",
+      "apellidos": "López Torres",
+      "email": "ana.lopez@mail.com",
+      "rol": "admin",
+      "fechaAlta": "2020-10-12",
+      "fechaNacimiento": "1998-04-09",
+      "activo": true
+    },
+    {
+      "id": 6,
+      "nombre": "Sergio",
+      "apellidos": "Navarro Díaz",
+      "email": "sergio.navarro@mail.com",
+      "rol": "user",
+      "fechaAlta": "2023-11-01",
+      "fechaNacimiento": "2002-08-14",
+      "activo": false
+    },
+    {
+      "id": 7,
+      "nombre": "Lucía",
+      "apellidos": "Romero Castillo",
+      "email": "lucia.romero@mail.com",
+      "rol": "guest",
+      "fechaAlta": "2024-03-05",
+      "fechaNacimiento": "2005-01-27",
+      "activo": true
+    },
+    {
+      "id": 8,
+      "nombre": "Javier",
+      "apellidos": "Ortega Molina",
+      "email": "javier.ortega@mail.com",
+      "rol": "user",
+      "fechaAlta": "2022-06-18",
+      "fechaNacimiento": "2001-09-10",
+      "activo": true
+    },
+    {
+      "id": 9,
+      "nombre": "Paula",
+      "apellidos": "Iglesias Vega",
+      "email": "paula.iglesias@mail.com",
+      "rol": "admin",
+      "fechaAlta": "2019-02-01",
+      "fechaNacimiento": "1997-06-30",
+      "activo": false
+    },
+    {
+      "id": 10,
+      "nombre": "Raúl",
+      "apellidos": "Moreno Campos",
+      "email": "raul.moreno@mail.com",
+      "rol": "user",
+      "fechaAlta": "2023-07-22",
+      "fechaNacimiento": "2003-10-11",
+      "activo": true
+    }
+  ],
+  "seleccionados": []
+}

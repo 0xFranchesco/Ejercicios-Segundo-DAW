@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Recuperación JS - Gestión de usuarios</title>
+
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    #layout { display: flex; gap: 20px; align-items: flex-start; }
+    #zonaTabla { width: 70%; }
+    #zonaFicha { width: 30%; min-height: 200px; border: 1px solid #ccc; padding: 10px; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { border: 1px solid #333; padding: 8px; text-align: left; }
+    img.avatar { width: 50px; height: 50px; object-fit: cover; cursor: pointer; }
+    #mensaje { margin: 10px 0; padding: 10px; border: 1px dashed #666; }
+    #tooltip { margin-top: 8px; font-size: 14px; }
+    .oculto { display: none; }
+  </style>
+</head>
+
+<body>
+
+  <h2>Gestión de usuarios</h2>
+
+  <div id="mensaje">Pulsa F1 para ordenar…</div>
+
+  <div id="layout">
+    <div id="zonaTabla">
+      <table id="tablaUsuarios">
+        <thead>
+          <tr>
+            <th>Avatar</th>
+            <th>Nombre completo</th>
+            <th>Email</th>
+            <th>Rol</th>
+            <th>Fecha alta</th>
+            <th>Antigüedad (días)</th>
+            <th>Marcar</th>
+          </tr>
+        </thead>
+        <tbody id="tbodyUsuarios">
+          <!-- Filas generadas por JS -->
+        </tbody>
+      </table>
+
+      <div id="tooltip" class="oculto"></div>
+
+      <br/>
+      <button id="btnEnviar">Enviar al servidor los seleccionados</button>
+    </div>
+
+    <div id="zonaFicha">
+      <strong>Ficha usuario (click en avatar)</strong>
+      <div id="fichaContenido"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+
+    
+
+
+  </script>
+</body>
+</html>
