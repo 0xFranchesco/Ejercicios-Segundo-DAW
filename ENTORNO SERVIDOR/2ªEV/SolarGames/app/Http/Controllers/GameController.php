@@ -10,7 +10,9 @@ class GameController extends Controller
 {
      public function index()
     {
-        return GameResource::collection(Game::all());
+        $filter = request()->input('filter', []);
+        $games = Game::filter($filter)->get();
+        return GameResource::collection($games);
     }
 
      public function show(Game $game)

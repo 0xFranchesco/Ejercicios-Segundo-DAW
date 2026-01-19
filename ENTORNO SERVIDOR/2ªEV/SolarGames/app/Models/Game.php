@@ -29,4 +29,26 @@ class Game extends Model
     return $this->hasMany(Review::class);
     }
 
+    public function scopePopular($query)
+    {
+        return $query->withCount('reviews')->orderBy('reviews_count', 'desc');
+    }
+
+    public function scopeFilter($query, $filter)
+    {
+        $query
+        ->when($filter['synopsis'] ?? false, function($query, $synopsis){
+            $query->where('synopsis', 'LIKE', '%' . $synopsis . '%');
+        })
+        ->when($filter['developer'] ?? false, function($query, $developer){
+                $query->where('developer', 'LIKE', '%' . $developer . '%');
+        })
+        ->when($filter['release_year'] ?? false, function($query, $release_year){
+                $query->whereIn('release_year', explode(',' , $release_year));
+        })
+        ;
+
+        return $query;
+    }
+
 }
