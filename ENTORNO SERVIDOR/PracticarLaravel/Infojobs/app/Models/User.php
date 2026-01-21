@@ -12,6 +12,11 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    function ofertaTrabajo()
+    {
+        return $this->belongsToMany(OfertaTrabajo::class, 'candidatos');
+    }
+
     /**
      * The attributes that are mass assignable.
      *

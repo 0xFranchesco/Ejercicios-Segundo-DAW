@@ -11,15 +11,20 @@ class OfertaTrabajo extends Model
     use HasFactory;
 
     protected $fillable = [
+        'empresa_id',
         'titulo',
         'descripcion',
         'ubicacion',
-        'empresa_id',
     ];
 
     function empresa() 
     {
         return $this->belongsTo(Empresa::class);
+    }
+
+    function user()
+    {
+        return $this->belongsToMany(User::class, 'candidatos');
     }
 
 }

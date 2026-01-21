@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\OfertaTrabajo;
 use Illuminate\Http\Request;
 
 class OfertaController extends Controller
@@ -11,7 +12,10 @@ class OfertaController extends Controller
      */
     public function index()
     {
-        //
+        $ofertas = OfertaTrabajo::all();
+        return view('ofertas.index', [
+        'ofertas' => $ofertas
+        ]);
     }
 
     /**
@@ -19,7 +23,7 @@ class OfertaController extends Controller
      */
     public function create()
     {
-        //
+        return view('ofertas.create');
     }
 
     /**
@@ -27,7 +31,13 @@ class OfertaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      OfertaTrabajo::create([
+        'titulo' => request('titulo'),
+'empresa' => request('empresa'),
+'descripcion' => request('descripcion')
+]);
+
+       return redirect('/ofertas');
     }
 
     /**

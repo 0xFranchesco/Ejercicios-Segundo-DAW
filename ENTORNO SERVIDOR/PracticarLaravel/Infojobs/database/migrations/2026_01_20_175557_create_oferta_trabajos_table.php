@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('oferta_trabajos', function (Blueprint $table) {
             $table->id();
             $table->string('titulo');
-            $table->string('descripcion');
+            $table->text('descripcion');
             $table->string('ubicacion');
             $table->foreignIdFor(Empresa::class)->constrained()->cascadeOnDelete();
             $table->timestamps();

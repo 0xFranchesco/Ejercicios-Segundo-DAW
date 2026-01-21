@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Empresa;
+use App\Models\OfertaTrabajo;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -15,11 +17,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        Empresa::factory(5)->create();
+        $ofertasTrabajo = OfertaTrabajo::factory(10)->create();
+        $users = User::factory(10)->create();
+        
+        foreach($ofertasTrabajo as $oferta){
+            $candidatosAleatorios = $users->random(5);
+            $oferta->user()->attach($candidatosAleatorios);
+        }
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
     }
+      
 }
