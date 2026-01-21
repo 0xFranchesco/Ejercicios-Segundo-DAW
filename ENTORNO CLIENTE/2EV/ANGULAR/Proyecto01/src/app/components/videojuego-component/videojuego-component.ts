@@ -1,10 +1,11 @@
 import { Component, OnInit, DoCheck } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-videojuego-component',
-  imports: [],
+  imports: [CommonModule, RouterModule],
   templateUrl: './videojuego-component.html',
   styleUrl: './videojuego-component.css',
 })

@@ -1,0 +1,67 @@
+{
+  "usuarios": [
+     {
+      "id": "7",
+      "email": "michael.lawson@reqres.in",
+      "first_name": "Michael",
+      "last_name": "Lawson",
+      "dni": 1,
+      "birthdate": "1990-05-12",
+      "avatar": "https://reqres.in/img/faces/7-image.jpg"
+    },
+    {
+      "id": "8",
+      "email": "lindsay.ferguson@reqres.in",
+      "first_name": "Lindsay",
+      "last_name": "Ferguson",
+      "dni": 2,
+      "birthdate": "1991-07-19",
+      "avatar": "https://reqres.in/img/faces/8-image.jpg"
+    },
+    {
+      "id": "9",
+      "email": "tobias.funke@reqres.in",
+      "first_name": "Tobias",
+      "last_name": "Funke",
+      "dni": 3,
+      "birthdate": "1992-08-23",
+      "avatar": "https://reqres.in/img/faces/9-image.jpg"
+    },
+    {
+      "id": "10",
+      "email": "byron.fields@reqres.in",
+      "first_name": "Byron",
+      "last_name": "Fields",
+      "dni": "4",
+      "birthdate": "1993-09-15",
+      "avatar": "blob:null/53f12987-e728-47ac-a718-9836f65012c2"
+    },
+    {
+      "id": "11",
+      "email": "george.edwards@reqres.in",
+      "first_name": "George",
+      "last_name": "Edwards",
+      "dni": 5,
+      "birthdate": "1994-10-20",
+      "avatar": "https://reqres.in/img/faces/11-image.jpg"
+    },
+    {
+      "id": "12",
+      "email": "rachel.howell@reqres.in",
+      "first_name": "Rachel",
+      "last_name": "Howell",
+      "dni": 6,
+      "birthdate": "1996-1-1",
+      "avatar": "https://reqres.in/img/faces/12-image.jpg"
+    },
+    {
+      "id": "416f",
+      "email": "pepe@yo.es",
+      "first_name": "Pepe",
+      "last_name": "Capullos Voltejetas",
+      "dni": "13",
+      "birthdate": "1996-12-30",
+      "avatar": "blob:null/fedbe490-a5cc-441a-a678-3e8adad9d6bf"
+    }
+  ]
+}

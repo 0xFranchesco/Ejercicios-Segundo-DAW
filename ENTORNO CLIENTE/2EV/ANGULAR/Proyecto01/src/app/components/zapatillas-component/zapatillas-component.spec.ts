@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
 import { ZapatillasComponent } from './zapatillas-component';
+import { RouterModule } from '@angular/router';
+
 
 describe('ZapatillasComponent', () => {
   let component: ZapatillasComponent;

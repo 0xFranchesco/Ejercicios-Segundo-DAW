@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Zapatillas } from '../../models/zapatillas';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-zapatillas-component',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './zapatillas-component.html',
   styleUrl: './zapatillas-component.css',
 })
