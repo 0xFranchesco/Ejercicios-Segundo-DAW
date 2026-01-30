@@ -1,0 +1,20 @@
+meta {
+  name: Show Genre
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{BASE_URL}}/games/{{id}}/relationships/genre
+  body: none
+  auth: inherit
+}
+
+vars:pre-request {
+  id: 1
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

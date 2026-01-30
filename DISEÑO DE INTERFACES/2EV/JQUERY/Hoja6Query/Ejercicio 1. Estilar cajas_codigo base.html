@@ -82,19 +82,26 @@
     $(document).ready(function(){
            
         $.fn.estilar = function(estilo) {
-          this.removeClass('prohibido precaucion permitido');
-          this.addClass(estilo);
-          return this;
+          return $(this).attr('class', 'caja '+estilo);
         };
 
         $.fn.bordear = function(bordes) {
-          if (bordes === 'redondos') {
-            this.css('border-radius', '15px');
-          }else if(bordes === 'cuadrados'){
-            this.css('border', '2px solid black');
-          }else {
-            this.css('border-style', 'double');
-          };
+          switch (bordes) {
+            case 'redondos':
+              this.css('border', '2px solid black').css('border-radius', '15px');
+              break;
+            case 'cuadrados':
+              this.css('border', '2px solid black');
+              break;
+            case 'dobles':
+              this.css('border', '2px double black');
+              break;  
+          
+            default:
+
+              break;
+          }
+          return this;
         };
 
         $('#boton').click(function(event) {

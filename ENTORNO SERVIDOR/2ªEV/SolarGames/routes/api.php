@@ -45,3 +45,6 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 //-----------------------------------------------------------
+
+Route::get('/genres/{game}/games', [GenreController::class, 'gameGenre'])->name('games.genre');
+Route::get('/games/{game}/relationships/genre', [GameController::class, 'gamesRelationshipsGenre'])->name('games.relationships.genre');

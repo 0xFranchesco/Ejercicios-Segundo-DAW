@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\GenreRequest;
+use App\Http\Resources\GenreResource;
+use App\Models\Game;
 use Illuminate\Http\Request;
 use App\Models\Genre;
 
@@ -45,6 +47,11 @@ class GenreController extends Controller
             'mensaje' => 'Error al eliminarlo'
             ], 404);
         }
+    }
+
+    public function gameGenre(Game $game)
+    {
+        return new GenreResource($game->genre);
     }
 
 }
