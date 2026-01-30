@@ -1,0 +1,24 @@
+meta {
+  name: Update Genre
+  type: http
+  seq: 4
+}
+
+patch {
+  url: {{BASE_URL}}/genres/{{id}}
+  body: multipartForm
+  auth: inherit
+}
+
+body:multipart-form {
+  name: Fluido
+}
+
+vars:pre-request {
+  id: 7
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

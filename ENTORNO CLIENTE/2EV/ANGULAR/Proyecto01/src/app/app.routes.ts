@@ -7,8 +7,8 @@ import { Externo } from './components/externo/externo';
 export const routes: Routes = [
     {path: '', component: ZapatillasComponent, pathMatch: 'full' },
     {path: 'videojuegos', component: VideojuegoComponent},
-    {path: '**', component: NotFound},
     {path: 'externo', component: Externo},
+    {path: '**', component: NotFound},
 
 ];
    

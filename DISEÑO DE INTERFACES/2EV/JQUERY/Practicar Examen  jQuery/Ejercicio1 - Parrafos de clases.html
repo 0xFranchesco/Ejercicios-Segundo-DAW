@@ -57,6 +57,38 @@
 
 		$('body').prepend('<h2 style="text-align:center">Profesora</h2>');
 
+		$.fn.estilar = function (fondo, color) {
+			return this.css('background-color', fondo).css('color', color);
+		};
+
+		$.expr[':'].tieneClase = function(elem, index, meta) {
+			return $(elem).hasClass(meta[3]);
+		};
+		
+		$.expr[':'].noTieneClase = function(elem, index, meta) {
+			return !$(elem).hasClass(meta[3]);
+		};
+		
+
+		$('#boton').click(function(){
+
+			let colorSeleccionado = $('#color').val();
+			let claseSeleccionada = $('#clase').val();
+
+			if (claseSeleccionada === 'sin clase') {
+				$('p:noTieneClase("especial")').estilar(colorSeleccionado);
+			} else {
+				$('p.' + claseSeleccionada).estilar(colorSeleccionado);
+			}
+
+		});
+
+		$('#resetear').click(function(){
+			$('p').estilar('white', 'black');
+		});
+
+
+
 	});
   </script>
 </body>

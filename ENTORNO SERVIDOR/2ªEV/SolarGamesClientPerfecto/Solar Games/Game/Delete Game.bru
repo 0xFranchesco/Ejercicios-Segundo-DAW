@@ -1,0 +1,20 @@
+meta {
+  name: Delete Game
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{BASE_URL}}/games/{{id}}
+  body: none
+  auth: inherit
+}
+
+vars:pre-request {
+  id: 23
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

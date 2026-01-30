@@ -1,0 +1,20 @@
+meta {
+  name: User Reviews
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{BASE_URL}}/users/{{id}}/reviews
+  body: none
+  auth: inherit
+}
+
+vars:pre-request {
+  id: 2
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

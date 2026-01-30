@@ -7,12 +7,11 @@ export class PeticionesServices {
   
   public url: string;
   constructor( public _http: HttpClient ) {
-    this.url = 'https://jsonplaceholder.typicode.com/';
+    this.url = 'https://pokeapi.co/api/v2/pokemon/';
   }
 
-  getUser(): Observable<any> {
-    return this._http.get(this.url + '?users=3');
+  getUser(userId: number): Observable<any> {
+    return this._http.get(this.url + userId);
   }
 
 }
-
