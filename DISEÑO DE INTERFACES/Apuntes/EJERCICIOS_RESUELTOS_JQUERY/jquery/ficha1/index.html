@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jquery</title>
+</head>
+<body>
+    <!-- ejercicio 1 -->
+    <h1 id="primero">Este es el primer texto</h1>
+    <h1 id="segundo">Este es el segundo texto</h1>
+    <!-- ejercicio 2 -->
+    <table>
+        <tr>
+            <td class="primera">Primera fila</td>
+        </tr>
+        <tr>
+            <td class="segunda">Segunda fila</td>
+        </tr>
+    </table>
+    <!-- ejercicio3 -->
+    <table>
+        <tr>
+            <td>primera</td>
+        </tr>
+        <tr>
+            <td>Segunda</td>
+        </tr>
+        <tr>
+            <td>tercera</td>
+        </tr>
+        <tr>
+            <td>4</td>
+        </tr>
+        <tr>
+            <td>5</td>
+        </tr>
+        <tr>
+            <td>6</td>
+        </tr>
+    </table>
+    <!-- ejercicio4 -->
+    <ul>
+        <li>primero</li>
+        <li>segundo</li>
+        <li>tercero</li>
+    </ul>
+    <!-- ejercicio5 -->
+     <h3>Primera lista</h3>
+     <ul>
+        <li>primero</li>
+        <li>segundo</li>
+        <li>tercero</li>
+        <li>cuarto</li>
+     </ul>
+
+     <h3>Segunda lista</h3>
+     <ul>
+        <li>quinto</li>
+        <li>sexto</li>
+        <li>septimo</li>
+        <li>octavo</li>
+     </ul>
+
+     <button>Ocultar 1ª lista</button>
+
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js'></script>
+    <script>
+        
+        $(document).ready(function(){
+            //ejercicio 1
+            $('#primero').click(function(){
+               $(this).css('background-color', 'red').css('color', 'white')
+            })
+            $('#segundo').click(function(){
+               $(this).css({'background-color':'green', 'color':'white'})
+            })
+            //ejercicio 2
+            $('.primera').click(function(){
+               $(this).css('background-color', 'red')
+            })
+            $('.segunda').click(function(){
+               $(this).css('background-color', 'blue')
+            })
+            //ejercicio 3
+            $('tr').click(function(){
+               $(this).css('background-color', 'yellow')
+            })
+            //ejercicio 4
+            $('li').click(function(){
+                $(this).hide();
+            })
+            //ejercicio 5
+            $('button').click(function(){
+                $('h3 + ul:first li').hide();
+            })
+            
+        })
+        
+
+    </script>
+</body>
+</html>

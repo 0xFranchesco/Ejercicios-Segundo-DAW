@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jquery</title>
+    <style>
+        .btn{
+            background-color: orange;
+            font-size: 40px;
+        }
+    </style>
+</head>
+<body>
+     <h3>Tutoriales sobre Diseño Web</h3>
+     <ul>
+        <li>
+            <a href="https://www.w3schools.com/html/">HTML</a>
+        </li>
+        <li>
+            <a href="https://uniwebsidad.com/libros/css  ">Introduccion a CSS</a>
+        </li>
+        <li>
+            <a href="https://www.w3schools.com/bootstrap4/default.asp">Bootstrap 4</a>
+        </li>
+        <li>
+            <a href="https://uniwebsidad.com/libros/fundamentos-jquery">Fundamentos de jQuery</a>
+        </li>
+        <li>
+            <a href="https://www.w3schools.com/jquery/default.asp">Tutorial de jQuery</a>
+        </li>
+     </ul>
+
+     <button class="btn" id="btn">Resaltar tutoriales de uniwebsidad</button>
+     <button class="btn" id="btnW3">Resaltar tutoriales de w3schools</button>
+
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js'></script>
+    <script>
+    
+        $(document).ready(function(){
+            $.extend($.expr[':'], {
+                uniwebsidad: function (elem, i, meta) {
+                    return elem.tagName == 'A' && $(elem).attr('href').startsWith('https://uniwebsidad.com');
+                    //return elem.href.startsWith('uniwebsidad') && $(elem).text().toLocaleLowerCase().startsWith('uniwebsidad')
+                }
+            })
+            $.expr[':'].w3schools = function (elem, i, meta) {
+                return elem.tagName === 'A' && $(elem).attr('href').startsWith('https://www.w3schools.com')
+            }
+
+            $('#btn').click(function(){
+                $('ul li a:uniwebsidad').css('background','orange');
+            })
+            $('#btnW3').click(function(){
+                $('ul li a:w3schools').css('background','lightblue');
+            })
+        })
+        
+    </script>
+</body>
+</html>

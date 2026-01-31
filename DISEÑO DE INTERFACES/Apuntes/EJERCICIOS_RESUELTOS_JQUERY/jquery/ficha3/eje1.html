@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jquery</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+    crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
+
+    <style>
+        .btn{
+            background-color: orange;
+            font-size: 40px;
+        }
+    </style>
+</head>
+<body class="container">
+     <h2>Tutoriales sobre <span class="text-primary">Diseño Web</span></h2>
+     <ul>
+        <li>
+            <a href="https://www.w3schools.com/html/">HTML</a>
+        </li>
+        <li>
+            <a href="https://uniwebsidad.com/libros/css  ">Introduccion a CSS</a>
+        </li>
+        <li>
+            <a href="https://www.w3schools.com/bootstrap4/default.asp">Bootstrap 4</a>
+        </li>
+        <li>
+            <a href="https://uniwebsidad.com/libros/fundamentos-jquery">Fundamentos de jQuery</a>
+        </li>
+        <li>
+            <a href="https://www.w3schools.com/jquery/default.asp">Tutorial de jQuery</a>
+        </li>
+     </ul>
+
+    <label class="form-label fw-bold text-primary">Web de Procedencia:</label>
+
+    <div class="d-flex gap-2 align-items-center">
+        <select class="form-select w-auto" id="desplegable">
+        <option value="" selected disabled>Selecciona una web</option>
+        <option value="uniwebsidad">uniwebsidad</option>
+        <option value="w3schools">W3Schools</option>
+        </select>
+        <button class="btn-light btn-outline-secondary text-primary fs-4" id="btnFiltrar">Resaltar</button>
+    </div>
+
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js'></script>
+    <script>
+    
+        $(document).ready(function(){  
+            $.expr[':'].filtro = function (elem, i, meta) {//cuando se crean pseudoelementos el return tiene q devolver true o false
+                var ref = '';
+                switch (meta[3]) {
+                    case 'uniwebsidad':
+                        ref='https://uniwebsidad';
+                        break;
+                    case 'w3schools':
+                        ref='https://www.w3schools';
+                        break;
+                    default:
+                        return false;
+                        break;
+                }
+                return $(elem).attr('href').toLowerCase().startsWith(ref);
+            }     
+            
+            $.fn.resaltar = function(fondo, texto){
+                return this.css({'background':fondo,'color':texto})
+            }
+
+            $('#btnFiltrar').click(function(){
+                var $valDesplegable = $('#desplegable').val();
+                console.log($valDesplegable)
+                $('ul li a').css({'background-color':'white', 'color': 'blue'});
+                $(`ul li a:filtro(${$valDesplegable})`).resaltar('red', 'white');
+            })
+        })
+    </script>
+</body>
+</html>

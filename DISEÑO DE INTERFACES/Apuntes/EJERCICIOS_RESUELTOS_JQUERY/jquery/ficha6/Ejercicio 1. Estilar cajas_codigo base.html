@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Cajas</title>
+  <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+
+  <style>
+   
+    .caja {
+      text-align:center;
+      width:150px;
+      height:75px;
+      background:lightgrey;
+    }
+
+  
+    span {
+      position:relative;
+      top:25px;
+      font-weight:bold;
+      font-size:1.5em;
+     
+      }
+    
+    .prohibido {background:red;color:yellow;}
+    .precaucion {background:yellow;color:red;}
+    .permitido {background:green;color:white;}
+
+    p {
+      border:2px solid black;
+      padding:15px;
+    }
+
+    #boton {
+      padding:15px;
+      margin-left:150px;
+      background:lightskyblue;
+      font-size:1.2em;
+    }
+    
+  </style>
+</head>
+<body>
+  <table>
+    <tr>
+      <td><div id="uno" class="caja"><span>1</span></div></td>
+    
+      <td><div id="dos" class="caja"><span>2</span></div></td>
+    
+      <td><div id="tres" class="caja"><span>3</span></div></td>
+    <tr>
+    <tr>
+      <td>
+        <p>Caja:<br><br>
+           <input type="radio" name="caja" value="uno" checked> Caja 1<br>
+           <input type="radio" name="caja" value="dos"> Caja 2<br>
+           <input type="radio" name="caja" value="tres"> Caja 3
+         </p>
+      </td>
+      <td>
+        <p>Estilo:<br><br>
+           <input type="radio" name="estilo" value="prohibido" checked> Prohibido<br>
+           <input type="radio" name="estilo" value="precaucion"> Precaución<br>
+           <input type="radio" name="estilo" value="permitido"> Permitido<br>
+         </p>
+      </td>
+      <td>
+        <p>Bordes:<br><br>
+           <input type="radio" name="bordes" value="redondos" checked> Redondos<br>
+           <input type="radio" name="bordes" value="cuadrados"> Cuadrados<br>
+           <input type="radio" name="bordes" value="dobles"> Dobles<br>
+         </p>
+      </td>      
+    </tr>
+  </table>
+  
+  <input type="button" id="boton" value="Aplicar cambios"/> 
+  
+  <script>
+    $(document).ready(function(){
+     
+        $('#boton').click(function(event) {
+          caja= $('[name="caja"]:checked').val();
+          estilo=$('[name="estilo"]:checked').val();
+          bordes=$('[name="bordes"]:checked').val();
+          switch (bordes) {
+            case 'redondos':
+              radiusPx = 10;
+              tipoBorde = 'solid';
+              break;
+            case 'cuadrados':
+              radiusPx = 0;
+              tipoBorde = 'solid';
+              break;
+            case 'dobles':
+              radiusPx = 0;
+              tipoBorde = 'double';
+              break;
+          }
+          $("#"+caja).estilar(estilo).bordear(3, tipoBorde, radiusPx); 
+        });  
+
+        $.fn.estilar = function(estilo){
+          return $(this).attr('class', 'caja '+ estilo);
+        }
+
+        // $.fn.bordear = function(bordes){
+        //   switch(bordes){
+        //     case ('redondos'):
+        //       return this.css('border-radius','10px');
+        //       break;
+        //     case ('cuadrados'):
+        //       return this.css('border-radius', '0px');
+        //       break;
+        //     case ('dobles'):
+        //       return this.css('border-style', 'double').css('border-radius', '0px');
+        //       break;
+        //   }
+        // }
+
+        $.fn.bordear = function(borderPx = 2, tipoBorde = 'solid', radiusPx = 0){
+          return $(this).css({'border-style': `${tipoBorde}`, 'border-width': `${borderPx}px`}).css('border-radius', radiusPx + 'px');
+        }
+	
+	});    
+  </script>
+ 
+</body>
+</html>

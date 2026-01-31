@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Videoclub</title>
+	<script src="https://code.jquery.com/jquery.min.js"></script>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<style>
+		
+	</style>
+</head>
+<body>
+<div class="container">
+	<h1>VIDEOCLUB</h1>
+	<ul id="videoclub">
+		<li><b>ACCIÓN</b>
+			<ul>
+				<li>Logan</li>
+				<li>Fast and Furious 8</li>
+				<li>La Momia</li>
+				<li>Geo-Tormenta</li>
+			</ul>
+		</li>
+		<li><b>MISTERIO</b>
+			<ul>
+				<li>Lo que la verdad esconde</li>
+				<li>Asesinato en el Orient Express</li>
+				<li>Los otros</li>
+				<li>El silencio de los corderos</li>
+			</ul>
+		</li>
+		<li><b>INFANTIL</b>
+			<ul>
+				<li>Mascotas</li>
+				<li>Cigueñas</li>
+				<li>Vaiana</li>
+				<li>Pocahontas</li>
+			</ul>
+		</li>
+		<li><b>MUSICAL</b>
+			<ul>
+				<li>La Bella y la Bestia</li>
+				<li>El mago de oz</li>
+				<li>La batalla del año</li>
+				<li>Canta</li>
+			</ul>
+		</li>
+	</ul>
+	<button id="pares">Marcar pares</button>
+	<button id="impares">Marcar impares</button>
+
+</div>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js'></script>
+<script>
+	$(document).ready(function () {
+		//1
+		$('#videoclub > li b').css({'background-color': 'lightblue', 'color':'white'})
+		//2
+		$('li ul li:first-child').css('text-decoration', 'underline');
+		$('li ul li:last-child').css('text-decoration', 'underline');
+		//3
+		$('#pares').click(function (){
+			$('li ul li').css({'background-color': 'transparent', 'color':'black'})
+			$('li ul li:odd').css({'background-color': 'red', 'color':'black'})
+		}) 
+		$('#impares').click(function (){
+			$('li ul li').css({'background-color': 'transparent', 'color':'black'})
+			$('li ul li:even').css({'background-color': 'red', 'color':'black'})
+		})
+		//4 su madre
+		// $('li:not(#videoclub > li)').click(function(e){
+		// 	if(e.target == this && e.target.style['background-color'] === '' || e.target.style['background-color'] === 'white'){
+		// 		$(this).css({'background-color': 'yellow', 'color':'red'})
+		// 		$(this).parent().children().not(this).css('display','none')
+		// 	}else{
+		// 		$(this).parent().children().css('display','block')
+		// 		$(this).css({'background-color': 'white', 'color':'black'})
+		// 	}
+		// 	console.log(e.target.style.color)
+		// 	console.log(this)
+		// });
+
+		$('li ul li').click(function(){
+			if($(this).siblings().is(':visible')){
+				$(this).css({'background-color': 'yellow', 'color':'red'})
+				$(this).siblings().hide();
+			}else{
+				$(this).css({'background-color': 'transparent', 'color':'black'})
+				$(this).siblings().show();
+			}
+		});
+		//5
+		let visible = true;
+
+		$('b').click(function(){
+			if($(this).next().is(':visible')){
+				$(this).next().hide()
+			}else{
+				$(this).next().show()
+			}
+		})
+	})
+</script>
+</body>
+</html>

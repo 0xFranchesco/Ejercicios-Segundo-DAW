@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jquery</title>
+</head>
+<body>
+     <h3>Pelis</h3>
+     <ul>
+        <li class="infantil">Aladdin</li>
+        <li>WW3</li>
+        <li>Guerra mundial Z</li>
+        <li class="infantil">Buscando a nemo</li>
+        <li class="infantil">Alicia en el pais de las maravillas</li>
+        <li>Fito y fitipaldis</li>
+        <li>Dragones reuniros</li>
+        <li class="infantil">Bob sponge</li>
+     </ul>
+
+     <button id="btnInfantiles">Pelis infantiles</button>
+     <button id="btnRestoPelis">El resto de pelis</button>
+
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js'></script>
+    <script>
+    
+        $(document).ready(function(){
+            $('#btnInfantiles').click(function(){
+                $('ul li.infantil').css('background-color', 'orange');
+                $('ul li:not(.infantil)').css('background-color', 'white');
+            })
+            $('#btnRestoPelis').click(function(){
+                $('ul li:not(.infantil)').css('background-color', 'blue');
+                $('ul li.infantil').css('background-color', 'white');
+            })
+        })
+        
+    </script>
+</body>
+</html>
