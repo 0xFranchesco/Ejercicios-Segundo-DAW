@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Ejemplo de Página</title>  
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .texto {
+            color: rgb(0, 0, 0);
+        }
+
+        .menu {
+            background-color: #ddd;
+            padding: 10px;
+        }
+
+        .menu a {
+            color: #00008B;
+            margin: 10px;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+
+        .contenido {
+            margin: 20px;
+            text-align: left; 
+            line-height: 1.6; 
+            max-width: 800px; 
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="menu">
+        <img src="https://placehold.co/250x100?text=Logotipo" alt="Logotipo de la empresa">
+        <nav>
+            <a href="#">Inicio</a>
+            <a href="#">Servicios</a>
+            <a href="#">Contacto</a>
+        </nav>
+    </header>
+
+    <main class="contenido">
+        <h1>Bienvenidos a nuestra página</h1>
+
+        <p>En esta página podrás encontrar información sobre nuestros servicios y las últimas novedades del sector.
+            Nuestro objetivo es brindarte la mejor experiencia y asegurarnos de que encuentres lo que necesitas.
+            A continuación, te mostramos algunos de nuestros productos destacados.</p>
+
+        <img src="https://placehold.co/500x300?text=Imagen+ficticia+de+empresa+;)"
+            alt="Imagen representativa de la empresa">
+
+        <p class="texto">Nuestra empresa se dedica a ofrecer soluciones innovadoras para mejorar la accesibilidad web.
+            Creemos en la inclusión digital y trabajamos para hacer que cada página sea más accesible para todos.
+            ¡Contáctanos para más información!</p>
+
+        <a href="https://www.ejemplo.com">Leer más sobre nuestros servicios de desarrollo web</a>
+
+        <h2>Contáctanos</h2>
+        <form>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre">
+            <br><br>
+            <label for="correo">Correo:</label>
+            <input type="email" id="correo" name="correo"> 
+            <br><br>
+            <button>Enviar</button>
+        </form>
+
+        <h2>Video informativo</h2>
+        <video controls>
+            <source src="video.mp4" type="video/mp4">
+        </video>
+        <track src="subitulos_es.vtt" kind="subtitles" srclang="es" label="Español" default>
+        
+    </main>
+
+</body>
+
+</html>
