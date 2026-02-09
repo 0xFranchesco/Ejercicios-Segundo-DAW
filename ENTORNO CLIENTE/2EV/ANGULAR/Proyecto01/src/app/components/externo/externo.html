@@ -1,7 +1,24 @@
-<p>externo works!</p>
+<h2>Has completado la pokedex!</h2>
+<input type="number" placeholder="Introduce el numero del pokemon que quieres mostrar" [(ngModel)]="userId">
+<br>
+<br>
+<button (click)="buscar()">Buscar pokémon</button>
 @if (user) {
 
     <h2>{{user.name}}</h2>
     <img src="{{user.sprites.front_default}}">
-
+    <h3>Tipos: </h3>
+    <ul>
+        @for (tipo of user.types; track tipo.slot) {
+            <li>{{tipo.type.name}}</li>
+        }
+    </ul>
+    <br>
+    <h3>Habilidades: </h3>
+    <ul>
+        @for (habilidad of user.abilities; track habilidad.slot) {
+            <li>{{habilidad.ability.name}}</li>
+        }
+    </ul>
 }
+
