@@ -19,16 +19,23 @@ export class Externo {
   constructor(private _peticionesServices: PeticionesServices, private cdr: ChangeDetectorRef) {
   }
 
+  cargando = false;
 
   buscar() {
+    this.cargando = true;
     this._peticionesServices.getUser(this.userId).subscribe({
       next: (result) => {
         this.user = result;
+        this.cargando = false;
         this.cdr.markForCheck();
       },
       error: (error) => {
         console.log(error);
+        this.cargando = false;
       }
     });
   }
+
+
+
 }

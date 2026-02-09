@@ -3,6 +3,13 @@
 <br>
 <br>
 <button (click)="buscar()">Buscar pokémon</button>
+
+@if(cargando) {
+
+    <img src="/cargando.gif" alt="cargando">
+
+} @else {
+
 @if (user) {
 
     <h2>{{user.name}}</h2>
@@ -20,5 +27,7 @@
             <li>{{habilidad.ability.name}}</li>
         }
     </ul>
+}
+
 }
 
