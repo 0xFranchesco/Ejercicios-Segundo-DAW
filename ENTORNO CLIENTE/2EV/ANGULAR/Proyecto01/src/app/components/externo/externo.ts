@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { PeticionesServices } from '../../services/peticiones.service';
 import { FormsModule } from '@angular/forms';
 import { ChangeDetectorRef } from '@angular/core';
-
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-externo',
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule, RouterModule],
   providers: [PeticionesServices],
   templateUrl: './externo.html',
   styleUrl: './externo.css',

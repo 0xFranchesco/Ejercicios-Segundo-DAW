@@ -6,6 +6,7 @@ import { Externo } from './components/externo/externo';
 
 export const routes: Routes = [
     {path: '', component: ZapatillasComponent, pathMatch: 'full' },
+    {path: 'zapatillas', component: ZapatillasComponent},
     {path: 'videojuegos', component: VideojuegoComponent},
     {path: 'externo', component: Externo},
     {path: '**', component: NotFound},

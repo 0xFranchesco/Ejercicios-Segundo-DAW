@@ -1,26 +1,22 @@
 <div>
-<h1>{{ titulo }}</h1>
+<h2>{{ titulo }}</h2>
 
-<ul>
-
-    <li *ngFor="let zapatilla of zapatillas">
-
-     
-        {{ zapatilla.Marca }} - 
-        {{ zapatilla.Color }} - 
-        {{ zapatilla.Modelo }} -
-        {{ zapatilla.Precio }} € 
-    <span *ngIf="zapatilla.Precio <= 80"
-        style="color: rgb(26, 255, 0); font-weight: bold;">
-         EN OFERTA! 
-    </span> -
-        {{ zapatilla.Stock }}
-      
-    </li>
-
-</ul>
+@if (zapatillas.length > 0) {
+  <ul>
+    @for (z of zapatillas; track z.Modelo) {
+      <li>
+        <b>{{ z.Marca }}</b> - {{ z.Modelo }} ({{ z.Color }})
+        | {{ z.Precio }}€
+        | stock: {{ z.Stock }}
+      </li>
+    }
+  </ul>
+} @else {
+  <p>No hay zapatillas.</p>
+}
 
 <br><br>
 <button [routerLink]="['/videojuegos']">Ir a Videojuegos</button>
+<a [routerLink]="['/externo']" routerLinkActive="active"> Ir a externo</a>
 
 </div>

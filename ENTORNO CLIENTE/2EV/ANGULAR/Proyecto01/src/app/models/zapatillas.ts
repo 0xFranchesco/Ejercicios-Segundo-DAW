@@ -1,13 +1,9 @@
-export class Zapatillas {
+export interface Zapatillas {
   
-    constructor(
-
-      public Marca: string,
-      public Color: string,
-      public Modelo: string,
-      public Precio: number,
-      public Stock: number,
-
-    ) {}
+      Marca: string,
+      Color: string,
+      Modelo: string,
+      Precio: number,
+      Stock: number,
 
 }

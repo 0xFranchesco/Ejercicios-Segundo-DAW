@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Zapatillas } from '../../models/zapatillas';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { ZapatillaService } from '../../services/zapatilla-service';
+import { ZapatillasServiceLocal } from '../../services/zapatillas-local';
 
 @Component({
   selector: 'app-zapatillas-component',
@@ -11,27 +13,86 @@ import { RouterModule } from '@angular/router';
 })
 export class ZapatillasComponent implements OnInit {
 
-  public titulo: string = "Aqui estan las zapatillas!";
+    titulo = 'Aquí están las zapatillas!';
 
-  public listado: string = "Pues un listado de zapatillas";
+    private zapatillasService = inject(ZapatillaService);
+    private zapatillasServiceLocal = inject(ZapatillasServiceLocal);
 
-  public zapatillas: Array<Zapatillas>;
+//--------------LOCAL--------------
 
-  constructor() {
-    this.zapatillas = [
+  zapatillas: Zapatillas[] = [];
 
-      new Zapatillas("Nike", "Blanco", "Air Max",120, 29),
-      new Zapatillas("Adidas", "Negro", "Ultraboost",65, 35),
-      new Zapatillas("Puma", "Rojo", "Suede Classic", 40.99, 10),
-      new Zapatillas("Reebok", "Azul", "Club C 85", 19.99, 5),
-      new Zapatillas("New Balance", "Gris", "574", 39.99, 15),
-    ];
+  zapatillaNueva: Zapatillas = {
+    Marca: '',
+    Color: '',
+    Modelo: '',
+    Precio: 0,
+    Stock: 0
+  };
+
+  cargarTodasLocal() {
+    this.zapatillas = this.zapatillasServiceLocal.getAll();
   }
 
-  ngOnInit(): void {
-    console.log("Componente de zapatillas cargado");
+//--------------------------------
+
+  cargando = false;
+  error = '';
+
+  //Cargo las de local porque aun no tengo el json server
+  ngOnInit() {
+    this.cargarTodasLocal();
   }
 
-  
+  cargarTodas() {
+    this.cargando = true;
+
+    this.zapatillasService.getAll().subscribe({
+      next: (data) => {
+        this.zapatillas = data;
+        this.cargando = false;
+      },
+      error: () => {
+        this.error = 'Error cargando zapatillas';
+        this.cargando = false;
+      }
+    });
+  }
+
+  crear() {
+    this.cargando = true;
+
+    this.zapatillasService.create(this.zapatillaNueva).subscribe({
+      next: () => {
+        this.zapatillaNueva = {
+          Marca: '',
+          Color: '',
+          Modelo: '',
+          Precio: 0,
+          Stock: 0
+        };
+
+        this.cargarTodas();
+      },
+      error: () => {
+        this.error = 'Error creando zapatilla';
+        this.cargando = false;
+      }
+    });
+  }
+
+  borrar(id?: number) {
+    if (!id) return;
+
+    this.cargando = true;
+
+    this.zapatillasService.delete(id).subscribe({
+      next: () => this.cargarTodas(),
+      error: () => {
+        this.error = 'Error borrando';
+        this.cargando = false;
+      }
+    });
+  }
 
 }
